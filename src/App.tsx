@@ -4,17 +4,20 @@ import { darkTheme, lightTheme } from './style/theme';
 import { useState } from 'react';
 import { Provider } from 'react-redux';
 import store from './store/store';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import routes from './routes';
+
+const router = createBrowserRouter(routes)
 
 function App() {
 
   const [themeState,setThemeState] = useState<string>('light')
 
+
   return (
     <Provider store={store}>
     <ThemeProvider theme={themeState === 'light' ? lightTheme : darkTheme}>
-    <div className="App">
-      
-    </div>
+    <RouterProvider router={router}/>
     </ThemeProvider>
     </Provider>
   );
