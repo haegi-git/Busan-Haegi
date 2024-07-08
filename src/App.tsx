@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import store from './store/store';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import routes from './routes';
+import { Reset } from 'styled-reset';
 
 const router = createBrowserRouter(routes)
 
@@ -16,6 +17,7 @@ function App() {
 
   return (
     <Provider store={store}>
+      <Reset/>
     <ThemeProvider theme={themeState === 'light' ? lightTheme : darkTheme}>
     <RouterProvider router={router}/>
     </ThemeProvider>
