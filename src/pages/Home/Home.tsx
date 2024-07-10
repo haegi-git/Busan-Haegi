@@ -41,7 +41,7 @@ export default function Home(){
             <div>
                 <h3>미리보기</h3>
                 <Contents>
-                    {testArr.map(()=> <Preview/>)}
+                    {testArr.map((a,idx)=> <Preview key={idx}/>)}
                 </Contents>
             </div>
 

@@ -1,14 +1,12 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
+// app/store.ts
+import { configureStore } from '@reduxjs/toolkit';
+import writingSlice from './features/writing/writingSlice';
 
-const rootReducer = {
-
-}
-
-const store = configureStore({
-    reducer: rootReducer
+export const store = configureStore({
+  reducer: {
+    writing: writingSlice,
+  },
 });
 
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-export const useAppDispatch = () => useDispatch<AppDispatch>();
-export default store
