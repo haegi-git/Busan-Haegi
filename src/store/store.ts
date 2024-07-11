@@ -1,10 +1,12 @@
 // app/store.ts
 import { configureStore } from '@reduxjs/toolkit';
-import writingSlice from './features/writing/writingSlice';
+import fetchSlice from './features/fetch/fetchSlice';
+import postingSlice from './features/writing/postingSlice';
 
 export const store = configureStore({
   reducer: {
-    writing: writingSlice,
+    posting: postingSlice,
+    fetchItem: fetchSlice,
   },
 });
 

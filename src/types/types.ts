@@ -7,3 +7,10 @@ export type PostType = {
     content: string,
     category: string
 }
+
+export type PostItemType = {
+    id:number,
+    title:string,
+    content:string,
+    category:string,
+}

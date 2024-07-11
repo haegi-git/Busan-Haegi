@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
 import { RootState } from "../../store/store"
-import { onChangeContent, onChangeTitle } from "../../store/features/writing/writingSlice"
-import { createPost } from "../../api/post"
+import { createPost } from "../../api/createPost"
+import { useNavigate } from "react-router-dom"
+import { onChangeContent, onChangeTitle } from "../../store/features/writing/postingSlice"
 
 const Container = styled.form`
     display: flex;
@@ -53,23 +54,27 @@ const Container = styled.form`
 `
 
 export default function WritingForm(){
-    const {title,content,category} = useSelector((state :RootState)=> state.writing)
+    const {title,content,category} = useSelector((state :RootState)=> state.posting)
+
     const dispatch = useDispatch()
+
+    const navigate = useNavigate()
 
     const handelSubmit = async(e:React.FormEvent) =>{
         e.preventDefault()
         try {
             await createPost({title,content,category})
-            alert('성공')
+
+            navigate('/board')
         } catch(error){
             console.error('Error',error)
             alert('실패')
         }
     }
-    
+
     return(
         <Container action="#" onSubmit={handelSubmit}>
-            <input 
+            <input
                 value={title}
                 type="text"
                 placeholder="제목을 입력하세요."

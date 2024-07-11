@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const WriteValueSlice = createSlice({
-    name : 'WriteValueSlice',
+export const postingSlice = createSlice({
+    name : 'postingSlice',
     initialState : {
         title: '',
         content: '',
@@ -20,8 +20,8 @@ export const WriteValueSlice = createSlice({
     }
 })
 
-export default WriteValueSlice.reducer;
+export default postingSlice.reducer;
 export const {
     onChangeTitle,
     onChangeContent,
-    onChangeCategory} = WriteValueSlice.actions
+    onChangeCategory} = postingSlice.actions
