@@ -14,3 +14,7 @@ export type PostItemType = {
     content:string,
     category:string,
 }
+
+export type pageDataType = {
+    selected:number
+}

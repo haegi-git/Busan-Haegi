@@ -1,11 +1,11 @@
 import styled from "styled-components"
-import { BoardContentsPropsType, PostItemType } from "../../types/types"
+import { BoardContentsPropsType, pageDataType, PostItemType } from "../../types/types"
 
 import testImg from './../../img/KakaoTalk_20240625_092242230_01.jpg'
 import { Link } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPen } from "@fortawesome/free-solid-svg-icons"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { fetchPosts } from "../../api/fetchPosts"
 import { useDispatch, useSelector } from "react-redux"
 import { getPosts } from "../../store/features/fetch/fetchSlice"
@@ -66,12 +66,21 @@ const PageNumber = styled.div`
         padding: 10px;
         border-radius: 10px;
     }
+    > .pagination .active{
+        background-color: red;
+    }
+    > .pagination li:hover{
+        background-color: rgba(0,0,0,0.3);
+    }
 `
 export default function BoardContents({
     boardName
 }:BoardContentsPropsType){
 
     const {posts,loading,error} = useSelector((state:RootState)=> state.fetchItem)
+
+    const [currentPage,setCurrentPage] = useState<number>(0)
+    const itemsPerPage = 8
 
     const dispatch = useDispatch()
 
@@ -88,11 +97,18 @@ export default function BoardContents({
         loadPosts()
     },[dispatch])
 
-    console.log(posts)
+    const handelPagination = (data:pageDataType) =>{
+        setCurrentPage(data.selected)
+    }
+
+    const offset = currentPage * itemsPerPage;
+    const currentItems = posts.slice(offset, offset + itemsPerPage)
+    const pageCount = Math.ceil(posts.length / itemsPerPage)
+
     return(
         <Container>
             <h3>{boardName}</h3>
-            {posts.map((item)=>{
+            {currentItems.map((item)=>{
                 return(
             <BoardContent key={item.id}>
                 <img src={testImg} alt="" />
@@ -106,9 +122,10 @@ export default function BoardContents({
                      previousLabel={'previous'}
                     nextLabel={'next'}
                     breakClassName={'break-me'}
-                    pageCount={5}
+                    pageCount={pageCount}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={5}
+                    onPageChange={handelPagination}
                     containerClassName={'pagination'}
                     activeClassName={'active'}/>
                 <Link to={'/writing'}>
