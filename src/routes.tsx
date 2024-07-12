@@ -1,4 +1,5 @@
 import Board from "./pages/board/Board"
+import Details from "./pages/Details/Details"
 import Home from "./pages/Home/Home"
 import Layout from "./pages/Layout"
 import Writing from "./pages/Writing/Writing"
@@ -11,7 +12,9 @@ const routes = [
 
             {path: '/board',element: <Board/>},
 
-            {path: '/writing',element: <Writing/>}
+            {path: '/writing',element: <Writing/>},
+
+            {path: '/:path/:id', element: <Details/>}
         ]
     }
 ]
