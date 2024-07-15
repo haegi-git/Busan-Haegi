@@ -1,10 +1,21 @@
 import { supabase } from "../subabaseClient";
-import { PostType } from "../types/types";
+import { CommentItemType, PostType } from "../types/types";
 
 export const createPost = async ({title,content,category}:PostType) => {
     const { data,error } = await supabase
-    .from('posts')
+    .from('board')
     .insert([{title,content,category}])
+
+    if ( error ){
+        throw new Error(error.message)
+    }
+    return data
+}
+
+export const createComment = async ({id,user,comment}:CommentItemType) => {
+    const { data,error } = await supabase
+    .from('board_comment')
+    .insert([{id,user,comment}])
 
     if ( error ){
         throw new Error(error.message)

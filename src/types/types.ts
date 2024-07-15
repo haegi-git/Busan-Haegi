@@ -18,3 +18,9 @@ export type PostItemType = {
 export type pageDataType = {
     selected:number
 }
+
+export type CommentItemType = {
+    id:number,
+    user:string,
+    comment:string,
+}

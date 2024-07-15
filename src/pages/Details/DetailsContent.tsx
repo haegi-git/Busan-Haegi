@@ -7,6 +7,7 @@ import longImg from './../../img/PC_ginseng_banner.jpg'
 import { useEffect, useState } from "react"
 import { fetchDetailPost } from "../../api/fetchPosts"
 import { PostItemType } from "../../types/types"
+import DetailsCommnet from "./DetailsComment"
 
 const Container = styled.div`
     display: flex;
@@ -41,16 +42,25 @@ const ButtonWrap = styled.div`
 export default function DetailsContent(){
 
     const {path,id} = useParams<{path?: string, id?: string}>()
+    // params로 어느 카테고리에 어느 아이템에 들어왔는지 확인
 
     const [detailData,setDetailData] = useState<PostItemType>()
 
     useEffect(()=>{
         if(path && id){
+            // 조건문으로 감싸놓은 이유는 타입 에러가 계속 발생하기 때문
             const loadPost = async (path:string,id:string)=>{
                 try{
                     const data = await fetchDetailPost({category:path,id})
+                    // fetchDetailPost라는 함수를 fetchPosts.ts에 생성
+                    // 인자로 카테고리와 id를 받아
+                    // supabase에 원하는 테이블에 원하는 id값을 가진 아이템만
+                    // 받아옴 (이렇게 만든 이유는 새로고침 또는 url을 타고 들어왔을 때에도 데이터를 받아오기 위함)
 
                     setDetailData(data[0])
+                    // detailData에 계속 배열 안에 객체로 저장이되어
+                    // 화면에 뿌려줄 때 에러가 발생하는걸 막기위해
+                    // 객체로 나오게 끔 [0]번째 요소만 선택
                 }catch(error){
                     console.error(error)
                 }
@@ -59,34 +69,38 @@ export default function DetailsContent(){
         }
     },[path,id])
 
-    console.log(detailData)
-
     if(detailData){
+        // type에러를 방지하기위해 조건문으로 렌더링
         return(
             <Container>
-            <TitleBox>
-                <h1>{detailData.title}</h1>
-            </TitleBox>
 
-            <ContentBox>
-                <div>
-                    <img src={testImg} alt="" />
-                </div>
-                <div>
-                    <p>
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse aspernatur alias explicabo, earum hic sed dolorum dolores. Sed repudiandae eligendi, debitis laboriosam iure eius culpa voluptate unde expedita corporis ex!
+                <TitleBox>
+                    <h1>{detailData.title}</h1>
+                </TitleBox>
 
-                    </p>
-                </div>
-            </ContentBox>
-            <ButtonWrap>
-                <button>
-                    수정하기
-                </button>
-                <button>
-                    삭제하기
-                </button>
-            </ButtonWrap>
+                <ContentBox>
+                    <div>
+                        <img src={testImg} alt="" />
+                    </div>
+                    <div>
+                        <p>
+                            {detailData.content}
+
+                        </p>
+                    </div>
+                </ContentBox>
+
+                <ButtonWrap>
+                    <button>
+                        수정하기
+                    </button>
+                    <button>
+                        삭제하기
+                    </button>
+                </ButtonWrap>
+
+                <DetailsCommnet/>
+
         </Container>
         )
     }

@@ -1,46 +1,53 @@
 import { styled } from "styled-components"
+import LoginFormLogin from "./LoginFormLogin"
+import { useState } from "react"
+import LoginFormSingup from "./LoginFormSingup"
 
 const Container = styled.div`
-    form{
-        width: 250px;
+
+`
+
+const LoginWrap = styled.div`
+    width: 250px;
         border: 1px solid rgba(255,255,255,0.7);
         border-radius: 5px;
         margin: auto;
         display: flex;
         flex-direction: column;
-        padding: 15px;
         margin-top:30px;
-        h3{
-            text-align: center;
-        }
-        input,button{
-            padding: 10px;
-            border-radius: 5px;
-            margin:7px;
-            font-weight: ${((props)=> props.theme.weight.fontBold)};
-        }
-    }
-`
 
-const LoginButton = styled.button`
-    background-color: ${((props)=> props.theme.colors.titleColor)};
-    color: ${((props)=> props.theme.colors.background)};
-`
-const Kakao = styled.button`
-    background-color: #EDDA00;
-    color: ${((props)=> props.theme.colors.titleColor)};
+        div{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.7);
+            cursor: pointer;
+            h3{
+                padding: 15px;
+            }
+            h3:first-child{
+                border-right: 1px solid rgba(255,255,255,0.7);;
+            }
+        }
+
 `
 
 export default function LoginForm(){
+
+    const [singup,setSingup] = useState(true)
+
     return(
         <Container>
-                <form action="#">
-                    <h3>로그인</h3>
-                    <input type="text" placeholder="아이디를 입력하세요." />
-                    <input type="password" placeholder="비밀번호를 입력하세요." />
-                    <LoginButton>로그인</LoginButton>
-                    <Kakao>카카오 로그인</Kakao>
-                </form>
+
+            <LoginWrap>
+                <div>
+                    <h3 onClick={()=>setSingup(true)}>로그인</h3>
+                    <h3 onClick={()=>setSingup(false)}>회원가입</h3>
+                </div>
+
+                {singup === false ? <LoginFormSingup/> :<LoginFormLogin/> }
+
+            </LoginWrap>
             </Container>
     )
 }
