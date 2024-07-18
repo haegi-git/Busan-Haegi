@@ -1,7 +1,8 @@
 import { styled } from "styled-components"
-import LoginFormLogin from "./LoginFormLogin"
 import { useState } from "react"
-import LoginFormSingup from "./LoginFormSingup"
+
+import LoginFormLogin from "./LoginFormLogin"
+import LoginFormSignup from "./LoginFormSignup"
 
 const Container = styled.div`
 
@@ -34,7 +35,7 @@ const LoginWrap = styled.div`
 
 export default function LoginForm(){
 
-    const [singup,setSingup] = useState(true)
+    const [signup,setSingup] = useState(true)
 
     return(
         <Container>
@@ -45,7 +46,7 @@ export default function LoginForm(){
                     <h3 onClick={()=>setSingup(false)}>회원가입</h3>
                 </div>
 
-                {singup === false ? <LoginFormSingup/> :<LoginFormLogin/> }
+                {signup === false ? <LoginFormSignup/> :<LoginFormLogin/> }
 
             </LoginWrap>
             </Container>

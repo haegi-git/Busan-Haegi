@@ -24,3 +24,9 @@ export type CommentItemType = {
     user:string,
     comment:string,
 }
+
+export type signupInputType = {
+    email:string,
+    password: string,
+    nickname: string
+}
