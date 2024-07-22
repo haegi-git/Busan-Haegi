@@ -3,6 +3,7 @@ import { styled } from "styled-components"
 import { RootState } from "../../store/store"
 import { signUp } from "../../api/signup"
 import { onChangeEmail, onChangeNickname, onChangePassword } from "../../store/features/signupInput/signupInputSlice"
+import { useState } from "react"
 
 const SignForm = styled.form`
 
@@ -29,14 +30,17 @@ export default function LoginFormSignup(){
 
     const {email,password,nickname} = useSelector((state:RootState)=> state.signupInput)
 
+    const [error,setError] = useState<string | null>(null);
+    const [loading,setLoading] = useState<boolean>(false);
+
     const handelSignUp = async(e:React.FormEvent) =>{
         e.preventDefault()
         try{
             await signUp(email,password,nickname)
-            alert('성공')
         }catch(error){
             console.error(error)
-            
+        }finally{
+            setLoading(false)
         }
     }
 
@@ -58,7 +62,11 @@ export default function LoginFormSignup(){
                     type="text"
                      placeholder="닉네임을 입력하세요."/>
 
-                    <SignButton onClick={handelSignUp}>회원가입</SignButton>
+                        {error && <p>{error}</p>}
+
+                    <SignButton onClick={handelSignUp}>
+                        {loading ? '가입 중...' : '회원가입'}
+                    </SignButton>
             </SignForm>
     )
 }
