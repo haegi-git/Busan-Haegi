@@ -37,6 +37,7 @@ export default function LoginFormSignup(){
         e.preventDefault()
         try{
             await signUp(email,password,nickname)
+            alert('회원가입성공')
         }catch(error){
             console.error(error)
         }finally{
