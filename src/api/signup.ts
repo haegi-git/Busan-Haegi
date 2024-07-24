@@ -9,21 +9,13 @@ export const signUp = async (email: string, password: string, nickname: string) 
     }else if(!nickname){
         alert('닉네임을 입력하세요.')
     }else{
-        const {data,error} = await supabase.auth.signUp({email,password})
+        const {data,error} = 
+        await supabase.auth.signUp
+        ({email,password,options:{data:{displayName:nickname}}})
 
     if(error){
         throw new Error(error.message);
     }
 
-    const {error: profileError} = await supabase
-    .from('profiles')
-    .insert({id: data.user?.id, username: nickname,});
-
-    if(profileError){
-        throw new Error(profileError.message);
     }
-
-    }
-
-
 };

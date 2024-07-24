@@ -30,9 +30,6 @@ export default function LoginFormSignup(){
 
     const {email,password,nickname} = useSelector((state:RootState)=> state.signupInput)
 
-    const [error,setError] = useState<string | null>(null);
-    const [loading,setLoading] = useState<boolean>(false);
-
     const handelSignUp = async(e:React.FormEvent) =>{
         e.preventDefault()
         try{
@@ -40,8 +37,6 @@ export default function LoginFormSignup(){
             alert('회원가입성공')
         }catch(error){
             console.error(error)
-        }finally{
-            setLoading(false)
         }
     }
 
@@ -63,10 +58,8 @@ export default function LoginFormSignup(){
                     type="text"
                      placeholder="닉네임을 입력하세요."/>
 
-                        {error && <p>{error}</p>}
-
                     <SignButton onClick={handelSignUp}>
-                        {loading ? '가입 중...' : '회원가입'}
+                        회원가입
                     </SignButton>
             </SignForm>
     )

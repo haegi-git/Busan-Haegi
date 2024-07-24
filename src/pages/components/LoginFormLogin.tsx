@@ -5,7 +5,6 @@ import { onChangeLoginEmail, onChangeLoginPassword } from "../../store/features/
 import { login } from "../../api/login"
 
 const LoginForm = styled.form`
-
             display: flex;
             flex-direction: column;
 
@@ -31,8 +30,6 @@ export default function LoginFormLogin(){
     const dispatch = useDispatch()
 
     const {loginEmail,loginPassword} = useSelector((state:RootState)=>state.loginInput)
-
-    console.log(`로긴한 아이디비번 : ${loginEmail}, ${loginPassword}`)
 
     const loginButton = async(e:React.FormEvent) =>{
         e.preventDefault()
