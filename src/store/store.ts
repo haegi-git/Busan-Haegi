@@ -5,13 +5,15 @@ import fetchSlice from './features/fetch/fetchSlice';
 import postingSlice from './features/writing/postingSlice';
 import signupInputSlice from './features/signupInput/signupInputSlice';
 import loginInputSlice from './features/loginInput/loginInputSlice';
+import loginStateSlice from './features/loginState/loginStateSlice';
 
 export const store = configureStore({
   reducer: {
     posting: postingSlice,
     fetchItem: fetchSlice,
     signupInput: signupInputSlice,
-    loginInput: loginInputSlice
+    loginInput: loginInputSlice,
+    loginState: loginStateSlice
   },
 });
 

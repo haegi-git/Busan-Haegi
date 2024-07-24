@@ -30,3 +30,9 @@ export type signupInputType = {
     password: string,
     nickname: string
 }
+
+export type userType = {
+    userEmail:string|undefined,
+    userId:string|undefined,
+    userNickname:string|undefined
+  }

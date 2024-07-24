@@ -1,8 +1,13 @@
 import { styled } from "styled-components"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import LoginFormLogin from "./LoginFormLogin"
 import LoginFormSignup from "./LoginFormSignup"
+import { useDispatch, useSelector } from "react-redux"
+import { getUserEmail, getUserId, getUserNickname } from "../../store/features/loginState/loginStateSlice"
+import { loginState } from "../../api/loginState"
+import { userType } from "../../types/types"
+import { RootState } from "../../store/store"
 
 const Container = styled.div`
 
@@ -36,6 +41,28 @@ const LoginWrap = styled.div`
 export default function LoginForm(){
 
     const [signup,setSingup] = useState(true)
+
+    const dispatch = useDispatch()
+
+    const user = useSelector((state:RootState)=> state.loginState)
+
+  useEffect(()=>{
+    const getUserData = async() => {
+      try{
+        const {userEmail,userId,userNickname}:userType = await loginState()
+
+      dispatch(getUserEmail(userEmail))
+      dispatch(getUserId(userId))
+      dispatch(getUserNickname(userNickname))
+      }catch(error){
+        console.error(error)
+      }
+    }
+
+    getUserData()
+  },[dispatch])
+
+  console.log(user)
 
     return(
         <Container>
