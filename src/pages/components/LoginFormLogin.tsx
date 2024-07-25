@@ -3,26 +3,12 @@ import styled from "styled-components"
 import { RootState } from "../../store/store"
 import { onChangeLoginEmail, onChangeLoginPassword } from "../../store/features/loginInput/loginInputSlice"
 import { login } from "../../api/login"
+import { KakaoLogin, LoginFormButton, LoginFormInput } from "../../style/loginFormStyle"
+import { getUserEmail, getUserId, getUserNickname } from "../../store/features/loginState/loginStateSlice"
 
 const LoginForm = styled.form`
             display: flex;
             flex-direction: column;
-
-        input,button{
-            padding: 10px;
-            border-radius: 5px;
-            margin:7px;
-            font-weight: ${((props)=> props.theme.weight.fontBold)};
-        }
-`
-
-const LoginButton = styled.button`
-    background-color: ${((props)=> props.theme.colors.titleColor)};
-    color: ${((props)=> props.theme.colors.background)};
-`
-const Kakao = styled.button`
-    background-color: #EDDA00;
-    color: ${((props)=> props.theme.colors.titleColor)};
 `
 
 export default function LoginFormLogin(){
@@ -35,6 +21,12 @@ export default function LoginFormLogin(){
         e.preventDefault()
         try{
             await login({email:loginEmail,password:loginPassword})
+            .then((data)=>{
+                console.log(data)
+                dispatch(getUserEmail(data?.user.email))
+                dispatch(getUserId(data?.user.id))
+                dispatch(getUserNickname(data?.user.user_metadata.displayName))
+            })
             alert('로긴성공')
         }catch(error){
             console.error(error)
@@ -44,19 +36,19 @@ export default function LoginFormLogin(){
 
     return(
         <LoginForm>
-            <input
+            <LoginFormInput
              type="text"
               placeholder="이메일을 입력하세요."
               value={loginEmail}
               onChange={(e)=> dispatch(onChangeLoginEmail(e.target.value))}
                />
-                    <input
+                    <LoginFormInput
                      type="password"
                       placeholder="비밀번호를 입력하세요."
                       value={loginPassword}
                       onChange={(e)=> dispatch(onChangeLoginPassword(e.target.value))} />
-                    <LoginButton onClick={loginButton}>로그인</LoginButton>
-                    <Kakao>카카오 로그인</Kakao>
+                    <LoginFormButton onClick={loginButton}>로그인</LoginFormButton>
+                    <KakaoLogin>카카오 로그인</KakaoLogin>
         </LoginForm>
     )
 }

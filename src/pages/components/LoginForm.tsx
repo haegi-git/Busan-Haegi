@@ -1,81 +1,51 @@
 import { styled } from "styled-components"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 import LoginFormLogin from "./LoginFormLogin"
 import LoginFormSignup from "./LoginFormSignup"
-import { useDispatch, useSelector } from "react-redux"
-import { getUserEmail, getUserId, getUserNickname } from "../../store/features/loginState/loginStateSlice"
-import { loginState } from "../../api/loginState"
-import { userType } from "../../types/types"
+import { useSelector } from "react-redux"
 import { RootState } from "../../store/store"
+import { LoginUserState } from "./LoginUserState"
+import { LoginWrap } from "../../style/loginFormStyle"
 
 const Container = styled.div`
 
 `
 
-const LoginWrap = styled.div`
-    width: 250px;
-        border: 1px solid rgba(255,255,255,0.7);
-        border-radius: 5px;
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-        margin-top:30px;
-
-        div{
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.7);
-            cursor: pointer;
+const LoginToggle = styled.div`
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         text-align: center;
+         border-bottom: 1px solid rgba(255,255,255,0.7);
+          cursor: pointer;
             h3{
                 padding: 15px;
             }
             h3:first-child{
                 border-right: 1px solid rgba(255,255,255,0.7);;
             }
-        }
-
 `
 
 export default function LoginForm(){
 
     const [signup,setSingup] = useState(true)
 
-    const dispatch = useDispatch()
 
     const user = useSelector((state:RootState)=> state.loginState)
 
-  useEffect(()=>{
-    const getUserData = async() => {
-      try{
-        const {userEmail,userId,userNickname}:userType = await loginState()
-
-      dispatch(getUserEmail(userEmail))
-      dispatch(getUserId(userId))
-      dispatch(getUserNickname(userNickname))
-      }catch(error){
-        console.error(error)
-      }
-    }
-
-    getUserData()
-  },[dispatch])
-
-  console.log(user)
-
     return(
         <Container>
-
-            <LoginWrap>
-                <div>
+          {user.userId ? <LoginUserState/> :
+           <LoginWrap>
+                <LoginToggle>
                     <h3 onClick={()=>setSingup(true)}>로그인</h3>
                     <h3 onClick={()=>setSingup(false)}>회원가입</h3>
-                </div>
+                </LoginToggle>
 
                 {signup === false ? <LoginFormSignup/> :<LoginFormLogin/> }
-
             </LoginWrap>
+            }
+
             </Container>
     )
 }
