@@ -5,7 +5,7 @@ export type BoardContentsPropsType = {
 export type PostType = {
     title: string,
     content: string,
-    category: string
+    userUid: string,
 }
 
 export type PostItemType = {

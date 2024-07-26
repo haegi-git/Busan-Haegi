@@ -25,6 +25,7 @@ const Container = styled.div`
             padding: 10px;
             padding-top:0;
             color:#fff;
+            line-height: 1.4;
         }
 `
 
@@ -72,7 +73,7 @@ export const LoginUserState = () =>{
         <Container>
             <h3>안녕하세요 {user.userNickname}님</h3>
 
-            <p>오늘의 운세 : 개 똥 구림 ㅋㅋ</p>
+            <p>오늘의 운세 : 개 똥 구림 ㅋㅋ 진짜로 너무 구린거같음 ㅋㅋ</p>
 
             <BellIcon>
                 <FontAwesomeIcon icon={faBell}/>

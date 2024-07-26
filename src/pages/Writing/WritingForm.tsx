@@ -54,7 +54,9 @@ const Container = styled.form`
 `
 
 export default function WritingForm(){
-    const {title,content,category} = useSelector((state :RootState)=> state.posting)
+    const {title,content} = useSelector((state :RootState)=> state.posting)
+
+    const userUid = useSelector((state:RootState)=> state.loginState.userId)
 
     const dispatch = useDispatch()
 
@@ -63,7 +65,7 @@ export default function WritingForm(){
     const handelSubmit = async(e:React.FormEvent) =>{
         e.preventDefault()
         try {
-            await createPost({title,content,category})
+            await createPost({title,content,userUid})
 
             navigate('/board')
         } catch(error){
