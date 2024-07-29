@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
 
 import testImg from './../../img/KakaoTalk_20240625_092242230_01.jpg'
@@ -8,6 +8,8 @@ import { useEffect, useState } from "react"
 import { fetchDetailPost } from "../../api/fetchPosts"
 import { PostItemType } from "../../types/types"
 import DetailsCommnet from "./DetailsComment"
+import { useDispatch } from "react-redux"
+import { onChangeContent, onChangeTitle } from "../../store/features/writing/postingSlice"
 
 const Container = styled.div`
     display: flex;
@@ -46,6 +48,9 @@ export default function DetailsContent(){
 
     const [detailData,setDetailData] = useState<PostItemType>()
 
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
     useEffect(()=>{
         if(path && id){
             // 조건문으로 감싸놓은 이유는 타입 에러가 계속 발생하기 때문
@@ -69,6 +74,12 @@ export default function DetailsContent(){
         }
     },[path,id])
 
+    const updatePage = () =>{
+        dispatch(onChangeTitle(detailData?.title))
+        dispatch(onChangeContent(detailData?.content))
+        navigate(`/update/${id}`)
+    }
+
     if(detailData){
         // type에러를 방지하기위해 조건문으로 렌더링
         return(
@@ -91,7 +102,7 @@ export default function DetailsContent(){
                 </ContentBox>
 
                 <ButtonWrap>
-                    <button>
+                    <button onClick={updatePage}>
                         수정하기
                     </button>
                     <button>

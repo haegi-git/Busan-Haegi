@@ -14,7 +14,9 @@ const routes = [
 
             {path: '/writing',element: <Writing/>},
 
-            {path: '/:path/:id', element: <Details/>}
+            {path: '/:path/:id', element: <Details/>},
+
+            {path: '/update/:id', element: <Writing/>}
         ]
     }
 ]
