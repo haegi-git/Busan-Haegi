@@ -15,7 +15,7 @@ export const store = configureStore({
     signupInput: signupInputSlice,
     loginInput: loginInputSlice,
     loginState: loginStateSlice,
-    locationSlice: locationSlice
+    locationSlice: locationSlice,
   },
 });
 

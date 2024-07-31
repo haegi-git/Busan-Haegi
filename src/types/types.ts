@@ -9,10 +9,11 @@ export type PostType = {
 }
 
 export type PostItemType = {
-    id:number,
+    id:string,
     title:string,
     content:string,
     category:string,
+    userUid:string
 }
 
 export type pageDataType = {

@@ -8,8 +8,10 @@ import { useEffect, useState } from "react"
 import { fetchDetailPost } from "../../api/fetchPosts"
 import { PostItemType } from "../../types/types"
 import DetailsCommnet from "./DetailsComment"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { onChangeContent, onChangeTitle } from "../../store/features/writing/postingSlice"
+import { RootState } from "../../store/store"
+import { deletePost } from "../../api/deletePost"
 
 const Container = styled.div`
     display: flex;
@@ -51,6 +53,7 @@ export default function DetailsContent(){
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
+    console.log(detailData)
     useEffect(()=>{
         if(path && id){
             // 조건문으로 감싸놓은 이유는 타입 에러가 계속 발생하기 때문
@@ -80,6 +83,25 @@ export default function DetailsContent(){
         navigate(`/update/${id}`)
     }
 
+    const deletebutton = ()=>{
+        if(window.confirm('정말 지우시겠습니까?')){
+            const handleDelete = async() =>{
+                if(detailData){
+                    try{
+                        await deletePost({id:detailData?.id,userUid:detailData.userUid})
+                    }catch(error){
+                        console.error(error)
+                    }
+                }
+            }
+            handleDelete()
+        }else{
+
+        }
+    }
+
+    
+
     if(detailData){
         // type에러를 방지하기위해 조건문으로 렌더링
         return(
@@ -105,7 +127,7 @@ export default function DetailsContent(){
                     <button onClick={updatePage}>
                         수정하기
                     </button>
-                    <button>
+                    <button onClick={deletebutton}>
                         삭제하기
                     </button>
                 </ButtonWrap>
