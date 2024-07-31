@@ -6,6 +6,7 @@ import { useEffect } from "react"
 import { loginState } from "../api/loginState"
 import { userType } from "../types/types"
 import { getUserEmail, getUserId, getUserNickname } from "../store/features/loginState/loginStateSlice"
+import Writing from "./Writing/Writing"
 
 const Container = styled.div`
 

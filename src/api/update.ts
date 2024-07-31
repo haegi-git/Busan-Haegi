@@ -3,13 +3,13 @@ import { supabase } from "../subabaseClient"
 type updatePostType = {
     title:string,
     content:string,
-    id:string,
+    id?:string,
     userUid:string
 }
 
 export const updatePost = async ({title,content,id,userUid}:updatePostType) =>{
 
-    if(!id){
+    if(!userUid){
         alert('id가일치하지않음')
         return
     }

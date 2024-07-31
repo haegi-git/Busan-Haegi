@@ -6,6 +6,7 @@ import postingSlice from './features/writing/postingSlice';
 import signupInputSlice from './features/signupInput/signupInputSlice';
 import loginInputSlice from './features/loginInput/loginInputSlice';
 import loginStateSlice from './features/loginState/loginStateSlice';
+import locationSlice from './features/location/locationSlice';
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +14,8 @@ export const store = configureStore({
     fetchItem: fetchSlice,
     signupInput: signupInputSlice,
     loginInput: loginInputSlice,
-    loginState: loginStateSlice
+    loginState: loginStateSlice,
+    locationSlice: locationSlice
   },
 });
 

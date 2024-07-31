@@ -38,7 +38,7 @@ const ContentBox = styled.div`
 `
 
 const ButtonWrap = styled.div`
-    
+
 `
 
 export default function DetailsContent(){

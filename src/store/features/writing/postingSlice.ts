@@ -13,10 +13,15 @@ export const postingSlice = createSlice({
         onChangeContent:(state,action)=>{
             state.content = action.payload
         },
+        clearInput:(state,action)=>{
+            state.title = ''
+            state.content = ''
+        }
     }
 })
 
 export default postingSlice.reducer;
 export const {
     onChangeTitle,
-    onChangeContent,} = postingSlice.actions
+    onChangeContent,
+    clearInput} = postingSlice.actions
