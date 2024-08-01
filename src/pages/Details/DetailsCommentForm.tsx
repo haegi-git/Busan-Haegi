@@ -2,6 +2,11 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { FormEvent } from "react"
 import styled from "styled-components"
+import { createComment } from "../../api/createPost"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "../../store/store"
+import { onChangeComment } from "../../store/features/writing/postingSlice"
+import { useParams } from "react-router-dom"
 
 const Container = styled.form`
     position: relative;
@@ -28,15 +33,34 @@ const Container = styled.form`
 `
 
 export default function DetailsCommentForm(){
+    const dispatch = useDispatch()
 
-    const handelForm = (e: FormEvent) => {
+    const comment = useSelector((state:RootState)=> state.posting.comment)
+    const {userNickname,userId} = useSelector((state:RootState)=> state.loginState)
+    const {id} = useParams()
+    console.log(userNickname,userId,id)
+
+    const handelForm = async(e: React.FormEvent) => {
         e.preventDefault()
+
+        try{
+            await createComment({
+                board_id:id,
+                userUid:userId,
+                nickname:userNickname,
+                comment:comment})
+        }catch(error){
+            console.error(error)
+        }
     }
 
     return(
-        <Container onClick={handelForm}>
-            <textarea name="#" id="#"></textarea>
-            <button><FontAwesomeIcon icon={faCheck} /></button>
+        <Container onSubmit={handelForm}>
+            <textarea
+            value={comment}
+            onChange={(e)=>dispatch(onChangeComment(e.target.value))}
+             name="#" id="#"></textarea>
+            <button type="submit"><FontAwesomeIcon icon={faCheck} /></button>
         </Container>
     )
 }

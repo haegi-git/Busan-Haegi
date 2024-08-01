@@ -7,6 +7,7 @@ import signupInputSlice from './features/signupInput/signupInputSlice';
 import loginInputSlice from './features/loginInput/loginInputSlice';
 import loginStateSlice from './features/loginState/loginStateSlice';
 import locationSlice from './features/location/locationSlice';
+import commentsSlice from './features/fetch/commentsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     loginInput: loginInputSlice,
     loginState: loginStateSlice,
     locationSlice: locationSlice,
+    commentsSlice: commentsSlice,
   },
 });
 

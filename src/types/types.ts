@@ -21,8 +21,9 @@ export type pageDataType = {
 }
 
 export type CommentItemType = {
-    id:number,
-    user:string,
+    board_id:string | undefined,
+    userUid:string,
+    nickname:string,
     comment:string,
 }
 

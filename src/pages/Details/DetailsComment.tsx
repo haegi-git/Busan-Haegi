@@ -1,5 +1,11 @@
 import styled from "styled-components"
 import DetailsCommentForm from "./DetailsCommentForm"
+import { useEffect } from "react"
+import { fetchComments } from "../../api/fetchPosts"
+import { useParams } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { getComments } from "../../store/features/fetch/commentsSlice"
+import { RootState } from "../../store/store"
 
 const Container = styled.div`
     display: flex;
@@ -24,19 +30,43 @@ const Container = styled.div`
 `
 
 export default function DetailsCommnet(){
+    const {id} = useParams()
+
+    const dispatch = useDispatch()
+    
+    const comments = useSelector((state:RootState)=> state.commentsSlice.Comments)
+    useEffect(()=>{
+        const loadComments = async()=>{
+            try{
+                const data = await fetchComments(id)
+
+                dispatch(getComments(data))
+            }catch(error){
+                console.error(error)
+            }
+        }
+
+        loadComments()
+        
+        return()=>{
+            dispatch(getComments([]))
+        }
+
+    },[dispatch])
     return(
         <Container>
             <header>Comments</header>
             <div>
                 <ul>
-                    <li>
-                        <p>이름</p>
-                        <p>댓글</p>
-                        <p>어제</p>
-                    </li>
-                    <li>댓글</li>
-                    <li>댓글</li>
-                    <li>댓글</li>
+                    {comments.map((item,idx)=>{
+                        return(
+                        <li>
+                            <p>{item.nickname}</p>
+                            <p>{item.comment}</p>
+                            <p>시간</p>
+                        </li>
+                        )
+                    })}
                 </ul>
             </div>
             <DetailsCommentForm/>

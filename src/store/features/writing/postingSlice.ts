@@ -5,6 +5,7 @@ export const postingSlice = createSlice({
     initialState : {
         title: '',
         content: '',
+        comment:''
     },
     reducers:{
         onChangeTitle:(state,action)=>{
@@ -13,9 +14,8 @@ export const postingSlice = createSlice({
         onChangeContent:(state,action)=>{
             state.content = action.payload
         },
-        clearInput:(state,action)=>{
-            state.title = ''
-            state.content = ''
+        onChangeComment:(state,action)=>{
+            state.comment = action.payload
         }
     }
 })
@@ -24,4 +24,4 @@ export default postingSlice.reducer;
 export const {
     onChangeTitle,
     onChangeContent,
-    clearInput} = postingSlice.actions
+    onChangeComment} = postingSlice.actions

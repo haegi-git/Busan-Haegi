@@ -15,7 +15,22 @@ export const fetchPosts = async () =>{
 }
 
 export const fetchDetailPost = async ({category,id}:fetchDetailPostType) =>{
-    const { data, error } = await supabase.from(category).select('*').eq('id',id)
+    const { data, error } = await supabase
+    .from('board')
+    .select('*')
+    .eq('id',id)
+
+    if(error){
+        throw new Error(error.message)
+    }
+    return data
+}
+
+export const fetchComments = async(board_id:string|undefined)=>{
+    const {data,error} = await supabase
+    .from('board_comment')
+    .select('*')
+    .eq('board_id',board_id)
 
     if(error){
         throw new Error(error.message)

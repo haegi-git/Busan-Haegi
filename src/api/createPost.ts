@@ -12,10 +12,10 @@ export const createPost = async ({title,content,userUid}:PostType) => {
     return data
 }
 
-export const createComment = async ({id,user,comment}:CommentItemType) => {
+export const createComment = async ({board_id,userUid,nickname,comment}:CommentItemType) => {
     const { data,error } = await supabase
     .from('board_comment')
-    .insert([{id,user,comment}])
+    .insert([{board_id,userUid,nickname,comment}])
 
     if ( error ){
         throw new Error(error.message)

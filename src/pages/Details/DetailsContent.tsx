@@ -89,6 +89,7 @@ export default function DetailsContent(){
                 if(detailData){
                     try{
                         await deletePost({id:detailData?.id,userUid:detailData.userUid})
+                        navigate('/board')
                     }catch(error){
                         console.error(error)
                     }

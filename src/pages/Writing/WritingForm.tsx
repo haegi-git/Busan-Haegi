@@ -7,7 +7,8 @@ import { createPost } from "../../api/createPost"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { onChangeContent, onChangeTitle } from "../../store/features/writing/postingSlice"
 import { updatePost } from "../../api/update"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import Modal from "../components/Modal"
 
 const Container = styled.form`
     display: flex;
@@ -56,45 +57,38 @@ const Container = styled.form`
 `
 
 export default function WritingForm(){
+
     const {title,content} = useSelector((state :RootState)=> state.posting)
 
     const userUid = useSelector((state:RootState)=> state.loginState.userId)
 
-    const dispatch = useDispatch()
+    const [submit,setSubmit] = useState(false)
 
-    const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const {id} = useParams<{id?:string}>()
 
-    const handelSubmit = async(e:React.FormEvent) =>{
+    const modalSubmit = (e:React.FormEvent) =>{
         e.preventDefault()
-        try {
-            await createPost({title,content,userUid})
-
-            navigate('/board')
-        } catch(error){
-            console.error('Error',error)
-            alert('실패')
-        }
+        setSubmit(!submit)
     }
 
-    const handelUpdate = async(e:React.FormEvent)=>{
-        e.preventDefault()
-
-        try{
-            await updatePost({title,content,id,userUid})
-            navigate('/')
-        }catch(error){
-            console.error(error)
+    useEffect(()=>{
+        if(!id){
+            dispatch(onChangeTitle(''))
+            dispatch(onChangeContent(''))
         }
 
-    }
-    
-    
+        return () =>{
+            
+        }
+    },[])
+
 
     if(!id){
         return(
-            <Container action="#" onSubmit={handelSubmit}>
+            <>
+            <Container action="#" onSubmit={modalSubmit}>
                 <input
                     value={title}
                     type="text"
@@ -112,10 +106,19 @@ export default function WritingForm(){
                     <button type="submit">작성하기</button>
                 </div>
             </Container>
+            {submit === true ? <Modal
+            submit={setSubmit}
+            title={title}
+            content={content}
+            id={id}
+            userUid={userUid}/>
+             : null}
+            </>
         )
     }else{
         return(
-            <Container action="#" onSubmit={handelUpdate}>
+            <>
+            <Container action="#" onSubmit={modalSubmit}>
                 <input
                     value={title}
                     type="text"
@@ -133,7 +136,15 @@ export default function WritingForm(){
                     <button type="submit">수정하기</button>
                 </div>
             </Container>
+            {submit === true ? <Modal
+            submit={setSubmit}
+            title={title}
+            content={content}
+            id={id}
+            userUid={userUid}/>
+             : null}
+            </>
         )
     }
-    
+
 }

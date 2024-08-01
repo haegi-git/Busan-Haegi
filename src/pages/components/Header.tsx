@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+import Modal from "./Modal"
 
 const Contianer = styled.div`
     display: flex;
@@ -43,9 +44,7 @@ export default function Header(){
         </form>
         <ul>
             <li><Link to={'/board'}>자유게시판</Link></li>
-            <li>게시판</li>
-            <li>게시판</li>
-            <li>게시판</li>
+            <li><Link to={'/'}>추천 영상</Link></li>
         </ul>
         </Contianer>
     )
